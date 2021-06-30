@@ -1,0 +1,1 @@
+python ./bin/inference.py --model_path=C:\workspace\test\outputs\2021-06-16\09-03-58\model.pt --audio_path=C:\workspace\test\KsponSpeech_000058.pcm
