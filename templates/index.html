@@ -1,22 +1,107 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <script src="{{ url_for('static', filename="js/jquery.js") }}" type="text/javascript"></script>
+    <meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>saltlux chatbot</title>
 </head>
+<!-- 개인적으로 import 하는 것들 -->
+<script src="{{ url_for('static', filename="js/jquery.js") }}" type="text/javascript"></script>
+<script src="{{ url_for('static', filename="js/bootstrap.js") }}" type="text/javascript"></script>
+<script src="{{ url_for('static', filename="js/main.js") }}" type="text/javascript"></script>
+
+<link href="{{ url_for('static', filename="css/bootstrap.css") }}" rel="stylesheet" id="bootstrap-css" />
+<link href="{{ url_for('static', filename="css/main.css") }}" rel="stylesheet" id="main-css" />
+
+<!-- 개인적 import 끝 -->
+
+
+<!-- 이제부터 비트코인 표 가지고 오는 것을 해보겠습니다 -->
+ <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<link rel="stylesheet"
+		href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+		integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+		crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.0.0/css/bootstrap-slider.css" />
+<script src="{{ url_for('static', filename="js/bitchart.js") }}" type="text/javascript"></script>
+<!--비트코인 리스트 가지고 오는 것 끝 -->
+
+<!-- 캔들 차트 시작 -->
+<script src="{{ url_for('static', filename="js/yearchart.js") }}" type="text/javascript"></script>
+<script src="https://code.highcharts.com/stock/highstock.js"></script>
+<script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
+<!-- 캔들 차트 끝 -->
+
+<!--챗봇 관련 import 하는 것들  -->
+<link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+<link href="{{ url_for('static', filename="css/chat.css") }}" rel="stylesheet" id="chat-css" />
+<!-- 챗봇 관련 import 끝 -->
+
+<script>
+		greet();
+		onClickAsEnter();
+</script>
+
 <body>
-    <input type="text" id="test">
+	<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
+		<a class="navbar-brand" href="#">Bit to BIT</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+
+		<div class="collapse navbar-collapse" id="navbarColor03">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item active">
+					<a class="nav-link" href="#">회원가입/로그인 <span class="sr-only">(current)</span></a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="#">문의사항</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="#">차트 불러오기</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="#">오늘의 추천</a>
+				</li>
+			</ul>
+		</div>
+	</nav>
+
+<div class="bit-chart" style="width: 750px; height: 100%; padding-left: 10px; float: left;">
+	<div id='tmp' style="color:pink;"></div>
+	<br /><br />
+	<table id="table_ticker" class="table table-hover text-center">
+		<thead>
+			<tr>
+				<td>NO</td>
+				<td>한글명</td>
+				<td>현재가</td>
+				<td>전일대비</td>
+				<td>거래대금</td>
+			</tr>
+		</thead>
+		<tbody>
+		</tbody>
+	</table>
+	<br /><br /><br />
+	<div id='tmp2'></div>
+</div>
+<div class="candle-chart">
+	<div id="container" style="height: 400px; min-width: 310px; max-width: 750px;"></div>
+     <input type="text" id="test">
     <input type="button" value="test" id="btn">
     <div id='result'></div>
-    <!--button onclick="record();">녹음</button-->
-</body>
-<script>
+    <script>
         $("#btn").click(function(){
-            
+
             var test = $("#test").val()
             console.log(test)
             $.ajax({
                     type: "POST",
-                    url: '/record',
+                    url: '/sendmes',
                     data : {'result': test},
                     dataType : 'json',
                     success: function () {
@@ -25,4 +110,89 @@
                 });
         })
     </script>
+</div>
+<div class="round hollow text-center" style="position: fixed; bottom: 10px; right:30px;">
+	<button class="btn btn-primary" id="addClass"><i class="fa fa-whatsapp" aria-hidden="true"></i> 챗봇 열기</button>
+</div>
+
+
+
+
+<!-- 챗팅창 시작 -->
+<aside id="sidebar_secondary" class="tabbed_sidebar ng-scope chat_sidebar" style="height: 100%">
+	<button data-widget="remove" id="removeClass" class="chat-header-button pull-right" type="button">
+			<i class="glyphicon glyphicon-remove"></i>
+	</button>
+	<div class="top_menu">
+		<div class="buttons">
+			<div class="btn-group mb-4" role="group" aria-label="Button group example">
+				<button type="button" class="btn btn-primary" id="record">녹음</button>
+				<button type="button" class="btn btn-secondary" id="stop">정지</button>
+			</div>
+		</div>
+		 <button type="button"  class="form-check-input btn btn-info" id="chk-hear-mic" style="display: none">마이크</button>
+		<div class="title">BIT CHAT</div>
+	</div>
+	<ul class="messages" style="background-color: white;"></ul>
+	<div class="bottom_wrapper clearfix">
+		<div class="message_input_wrapper">
+			<input class="message_input"
+					onkeyup="return onClickAsEnter(event)"
+					placeholder="내용을 입력하세요."/>
+		</div>
+
+		<div class="send_message"
+			 id="send_message"
+			 onclick="onSendButtonClicked()">
+
+			<div class="icon"></div>
+			<div class="text">보내기</div>
+		</div>
+
+	</div>
+
+	<div class="message_template">
+		<li class="message">
+			<div class="avatar"></div>
+			<div class="text_wrapper">
+				<div class="text"></div>
+			</div>
+		</li>
+	</div>
+	<div id="sound-clips" style="display: none"></div>
+	<script src="{{ url_for('static', filename="js/record.js") }}" type="text/javascript"></script>
+	<!-- <script>
+		$("#stop").on("click", function(){
+
+			var test =$("#sound-clips").val()
+			console.log(test)
+
+			$.ajax({
+				type : "post",
+				url : "/record",
+				data:{'result':test},
+				dataType :'json',
+				success:function (){
+					console.log("record_button : Success")
+				}
+			});
+		});
+
+	</script> -->
+</aside>
+<!-- 챗팅창 끝 -->
+</body>
+<script type="text/javascript">
+$(function(){
+	$("#addClass").click(function () {
+		$('#sidebar_secondary').addClass('popup-box-on');
+		$("#addClass").hide();
+	});
+
+	$("#removeClass").click(function () {
+		$('#sidebar_secondary').removeClass('popup-box-on');
+		$("#addClass").show();
+	});
+	})
+</script>
 </html>
