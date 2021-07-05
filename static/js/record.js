@@ -72,7 +72,7 @@ if (navigator.mediaDevices) {
 			mediaRecorder.onstop = e => {
 				console.log("data available after MediaRecorder.stop() called.")
 
-				const clipName = prompt("오디오 파일 제목을 입력하세요.", new Date())
+				// const clipName = prompt("오디오 파일 제목을 입력하세요.", new Date())
 
 				const clipContainer = document.createElement('article')
 				const clipLabel = document.createElement('p')
@@ -82,7 +82,7 @@ if (navigator.mediaDevices) {
 				clipContainer.classList.add('clip')
 				audio.setAttribute('controls', '')
 				deleteButton.innerHTML = "삭제"
-				clipLabel.innerHTML = clipName
+				// clipLabel.innerHTML = clipName
 
 				clipContainer.appendChild(audio)
 				clipContainer.appendChild(clipLabel)
@@ -104,18 +104,18 @@ if (navigator.mediaDevices) {
 					});
 				  };
 				blobToBase64(blob).then(res => {
-					console.log(res);
+					console.log(res); 
 
 					chunks = []
 					const audioURL = URL.createObjectURL(blob)
 					audio.src = audioURL
-
+	
 					audio_name = getToday();
-
+	
 					form_data = new FormData()
 					form_data.append('name', audio_name + '.wav')
 					form_data.append('base64_audio', res)
-
+	
 					// ajax 통신(시작)
 					$.ajax({
 						url: '/upload_test',
@@ -127,19 +127,21 @@ if (navigator.mediaDevices) {
 						contentType: false, // essential, application/pdf doesn't work.
 						enctype: 'multipart/form-data',
 						success: function(result) {
-							alert(result.message);
-							alert(result.file)
+							setTimeout(function () {
+								return sendMessage(result, 'right');
+							}, 1000);
+							requestTalkBot(result);
 							//audio_print(response.file, $message, $messages, response.success);
 						},
 					});
-
+	
 					// 화면에 오디오 출력해주기(시작)
 					$message = $($('.template_outgoing').clone().html());
 					let $messages = $('.msg_history');
 					// 화면에 오디오 출력해주기(끝)
-
+	
 					console.log("recorder stopped");
-
+	
 				});
 ;
 				deleteButton.onclick = e => {
