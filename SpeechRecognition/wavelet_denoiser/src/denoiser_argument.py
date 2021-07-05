@@ -15,7 +15,7 @@ def denoises():
 
     parser.add_argument(
         "-i", "--input", help="the relative or absolute path of the sound file you wish to denoise", required=False, 
-        default='C:/Users/User/Speech/SpeechRecognition/Record_sample/3.wav')
+        default='D:/Final_project/SpeechRecognition/Record_sample/twoja.wav')
     parser.add_argument("-a", default=2, type=int,
                         help="denoiser param 'a' (default: %(default)s)")
     parser.add_argument("-b", default=1, type=int,
@@ -44,7 +44,7 @@ def denoises():
     parser.add_argument("-v", "--verbose", help="verbose (plays the result audio)",
                         action="store_true")
     parser.add_argument("-o", "--output", required=False,
-                        help="The output filename", default='C:/Users/User/Speech/SpeechRecognition/Record_sample/deno.wav')
+                        help="The output filename", default='D:/Final_project/SpeechRecognition/Record_sample/3.wav')
 
     args = parser.parse_args()
 
@@ -101,6 +101,7 @@ def denoises():
 
 
     outPath = os.path.dirname(args.output)
+    print(outPath)
 
     if(outPath and not os.path.isdir(outPath)):
         os.makedirs(outPath,exist_ok=True)

@@ -8,7 +8,8 @@ import math
 import pywt
 import waveletHelper
 from linkedList import LinkedList
-
+import sys
+sys.path.append("D:/final_project/Final_project/SpeechRecognition/wavelet_denoiser/src")
 
 class NoiseProfiler:
     'Basic denoiser wrapper for keeping store of the settings'
