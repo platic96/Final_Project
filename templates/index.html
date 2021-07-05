@@ -39,6 +39,39 @@
 <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
 <link href="{{ url_for('static', filename="css/chat.css") }}" rel="stylesheet" id="chat-css" />
 <!-- 챗봇 관련 import 끝 -->
+<style>
+ .toggler { width: 100%; height: 100%; position: relative; padding-left: 10px;}
+ .content { background: #ffffff;	color: #222222;}
+ .default { font-weight: normal; color: #555555;}
+ #effect { width: 750px; height: 100%; padding: 0.4em; position: relative; background: #fff; overflow: scroll; float: left;}
+ #button { padding: .5em 1em; text-decoration: none; }
+ #effect::-webkit-scrollbar {
+	display: none; /* Chrome, Safari, Opera*/
+}
+</style>
+<script>
+$(function(){
+
+ var state = true;
+ $("#chat-call").click(function(){
+
+	if(state) {
+	 $("#effect").animate({
+		backgroundColor: "#aa0000",
+		color : "#fff",
+		width: "100%"
+	 }, 1000);
+	}else{
+	 $("#effect").animate({
+		backgroundColor: "white",
+		color: "#000",
+		width: "750px"
+	 }, 1000);
+	}
+	state = !state;
+ });
+});
+</script>
 
 <script>
 		greet();
@@ -46,7 +79,7 @@
 </script>
 
 <body>
-	<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
+<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
 		<a class="navbar-brand" href="#">Bit to BIT</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
@@ -61,34 +94,37 @@
 					<a class="nav-link" href="#">문의사항</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="#">차트 불러오기</a>
+					<a class="nav-link" id = "chat-call" href="#">리스트 크게 보기</a>
 				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="#">오늘의 추천</a>
-				</li>
+
 			</ul>
 		</div>
 	</nav>
 
-<div class="bit-chart" style="width: 750px; height: 100%; padding-left: 10px; float: left;">
-	<div id='tmp' style="color:pink;"></div>
-	<br /><br />
-	<table id="table_ticker" class="table table-hover text-center">
-		<thead>
-			<tr>
-				<td>NO</td>
-				<td>한글명</td>
-				<td>현재가</td>
-				<td>전일대비</td>
-				<td>거래대금</td>
-			</tr>
-		</thead>
-		<tbody>
-		</tbody>
-	</table>
-	<br /><br /><br />
-	<div id='tmp2'></div>
-</div>
+
+ <div class="toggler">
+	<div id="effect" class="content corner">
+		<div id='tmp' style="color:pink;"></div>
+		<br /><br />
+		<table id="table_ticker" class="table table-hover text-center">
+			<thead>
+				<tr>
+					<td>NO</td>
+					<td>한글명</td>
+					<td>현재가</td>
+					<td>전일대비</td>
+					<td>거래대금</td>
+				</tr>
+			</thead>
+			<tbody>
+			</tbody>
+		</table>
+		<br /><br /><br />
+		<div id='tmp2'></div>
+	</div>
+ </div>
+
+
 <div class="candle-chart">
 	<div id="container" style="height: 400px; min-width: 310px; max-width: 750px;"></div>
      <input type="text" id="test">
