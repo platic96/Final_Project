@@ -1,3 +1,5 @@
+import sys
+print(sys.path)
 from flask import Flask
 from views import main
     
