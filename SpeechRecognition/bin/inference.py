@@ -15,8 +15,8 @@
 import argparse
 import sys
 #경로 수정
-sys.path.append('C:/Users/User/Final/Final_project/SpeechRecognition')
-sys.path.append('C:/Users/User/Final/Final_project/SpeechRecognition/wavelet_denoiser/src')
+sys.path.append('/usr/test/Final_project/SpeechRecognition')
+sys.path.append('/usr/test/Final_project/SpeechRecognition/wavelet_denoiser/src')
 import torch
 import torch.nn as nn
 import numpy as np
@@ -44,7 +44,7 @@ import soundfile as sf
 class Synthesizer_Kospeech:
     def __init__(self):
         parser = argparse.ArgumentParser(description='KoSpeech')
-        parser.add_argument('--model_path', type=str, required=False, default='SpeechRecognition/model.pt')
+        parser.add_argument('--model_path', type=str, required=False, default='/usr/test/Final_project/modellocation/model.pt')
         parser.add_argument('--audio_path', type=str, required=False, default='SpeechRecognition/Record_sample/file.wav')
         parser.add_argument('--device', type=str, required=False, default='cpu')
         self.opt = parser.parse_args()
