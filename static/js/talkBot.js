@@ -149,21 +149,34 @@ let state = 'SUCCESS';
 var text_flag = true;
 var conv_id = '';
 var cur_bot = 'Talkbot';
-
+var count = 0;
 // functions
 
 // 메세지 객체에 값 할당 함수
-
 function Message(arg) {
     this.text = arg.text;
     this.message_side = arg.message_side;
+    this.wavPath = arg.wavPath;
 
     this.draw = function (_this) {
         return function () {
             let $message;
             $message = $($('.message_template').clone().html());
             $message.addClass(_this.message_side).find('.text').html(_this.text);
+            $message[0].id = "mwav" + count++
             $('.messages').append($message);
+            console.log('아하',_this.wavPath)
+            if (_this.wavPath != undefined) {
+                // wav파일 추가
+                const mwav = document.getElementById('mwav'+ (count-1))
+                const audio = document.createElement('audio');
+                audio.autoplay = true;
+                audio.controls = 'controls';
+                audio.src = _this.wavPath;
+                audio.type = 'audioio/ogg';
+                audio.style = 'display:none;';
+                mwav.appendChild(audio);
+            }
 
             return setTimeout(function () {
                 return $message.addClass('appeared');
@@ -172,6 +185,8 @@ function Message(arg) {
     }(this);
     return this;
 }
+
+
 // }
 // function Message(arg) {
 //     this.text = arg.text;
@@ -228,7 +243,11 @@ function Message(arg) {
 // }
 
 // 챗봇 열었을 때 안내 멘트를 시작하는 함수
-function greet() {
+function greet(talkBotId) {
+
+    if (talkBotId == undefined) {
+        talkBotId = "noTalkBotId"
+    }
 
     if(text_flag === true) {
         $(() => {
@@ -237,25 +256,21 @@ function greet() {
             });
         });
 
-        answer_bot_id = '02927ec8-57aa-4d20-b468-b06c18dfa8df';
         $.ajax({
-            url: "http://49.50.161.221:8088/api/v1/chat/02927ec8-57aa-4d20-b468-b06c18dfa8df/startConversation",          
-            type: "GET",
+            url: "/talkBot/",          
+            type: "POST",
+            data : JSON.stringify({'talkBotId' : talkBotId }),
             dataType: "json",
-            success: function (data) {           
-                state = data['state'];
-                conv_id = data['conversationId']
+            contentType: 'application/json',
+            success: function (data) {
                 text_flag = false;
                 setTimeout(function () {
-                    return sendMessage(data.replies[0]['message'], 'left');
-                });
-                setTimeout(function () {
-                    return sendMessage('고객님의 아이디를 입력해주세요.', 'left');
+                    return sendMessage(data.message, 'left', ['static/audio/login.wav']);
                 });
             },
             error: function (request, status, error) {
                 setTimeout(function () {
-                    return sendMessage('죄송합니다. 서버 연결에 실패했습니다.', 'left');
+                    return sendMessage(['죄송합니다. 서버 연결에 실패했습니다.'], 'left');
                 });
             }
         });
@@ -265,21 +280,35 @@ function greet() {
 
 function getMessageText() {
     let $message_input;
+    let message = []
     $message_input = $('.message_input');
-    return $message_input.val();
+    message.push($message_input.val())
+    return message
 }
 
-function sendMessage(text, message_side) {
-    let $messages, message;
-    $('.message_input').val('');
-    $messages = $('.messages');
-    message = new Message({
-        text: text,
-        message_side: message_side
-    });
-    message.draw();
-    $messages.animate({scrollTop: $messages.prop('scrollHeight')}, 300);
+function sendMessage(messageArr, message_side, wavPath) {
+    for(var i=0; i<messageArr.length; i++) {
+        let $messages, message;
+        $('.message_input').val('');
+        $messages = $('.messages');
+        if(!wavPath) { // wavPath가 존재하지않으면
+            message = new Message({
+                text: messageArr[i],
+                message_side: message_side,
+            });
+        } else {    // wavPath가 존재하면
+            message = new Message({
+                text: messageArr[i],
+                message_side: message_side,
+                wavPath: wavPath[i],
+            });
+        }
+        
+        message.draw();
+        $messages.animate({scrollTop: $messages.prop('scrollHeight')}, 300);
+    }
 }
+
 // 메시지 입력 후 엔터 입력 시
 function onClickAsEnter(e) {
    
@@ -295,44 +324,35 @@ function onClickAsClick(msg) {
     }
 }
 
-function requestTalkBot(messageText) {
 
-    if (messageText.trim() == '' ){
+
+function requestTalkBot(messageText) {
+    if (messageText[0].trim() == ''){
         setTimeout(function () {
-            return sendMessage('공백은 적절하지 못한 값입니다. 다시한번 입력해주세요.', 'left');
+            return sendMessage(['공백은 적절하지 못한 값입니다. 다시한번 입력해주세요.'], 'left');
         }, 1000);
     }
     
-    answer_bot_id = '02927ec8-57aa-4d20-b468-b06c18dfa8df'
-    
-    if(isNaN(messageText) == false) {
-        messageText = '사이즈는 ' +  messageText + '할게';
-    }
     $.ajax({
-        url: 'http://49.50.161.221:8088/api/v1/chat/'+answer_bot_id+'/' +conv_id +'/1',
+        url: '/talkBot/conv',
         type: "POST",
-        data: messageText,
+        data: JSON.stringify({'message' : messageText[0] }),
         dataType: "json",
-        success: function (data) {           
-            conv_id = data['conversationId'];
-            console.log(data.replies[0]);
-            if(data.replies[0] == undefined) {
+        contentType: 'application/json',
+        success: function (data) { 
+            if(data.message.length == 0) {
                 setTimeout(function () {
-                    return sendMessage('다시 입력해주세요.', 'left');
+                    return sendMessage(['다시 입력해주세요.'], 'left');
                 }, 1000);
+            } else {
+                setTimeout(() => {
+                    return sendMessage(data.message, 'left', data.path);
+                }, 2000)
             }
-            else {
-                data.replies.forEach(function(reply) {
-                    setTimeout(function () {
-                        return sendMessage(reply['message'], 'left');
-                    }, 2000);
-                });
-            }
-
         },
         error: function (request, status, error) {
             setTimeout(function () {
-                return sendMessage('죄송합니다. 서버 연결에 실패했습니다.', 'left');
+                return sendMessage(['죄송합니다. 서버 연결에 실패했습니다.'], 'left');
             }, 1000);
         }
     });
@@ -340,12 +360,10 @@ function requestTalkBot(messageText) {
 
 function onSendButtonClicked() {
     let messageText = getMessageText();
-    
     setTimeout(function () {
         sendMessage(messageText, 'right');
     }, 1000);
     $('.message_input').val('');
-
     return requestTalkBot(messageText);
 }
 

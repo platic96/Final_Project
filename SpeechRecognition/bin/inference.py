@@ -15,8 +15,8 @@
 import argparse
 import sys
 #경로 수정
-sys.path.append('/usr/test/Final_project/SpeechRecognition/wavelet_denoiser/src')
-sys.path.append('/usr/test/Final_project/SpeechRecognition')
+sys.path.append('C:/Users/User/Final/Final_project/SpeechRecognition')
+sys.path.append('C:/Users/User/Final/Final_project/SpeechRecognition/wavelet_denoiser/src')
 import torch
 import torch.nn as nn
 import numpy as np
@@ -80,10 +80,6 @@ class Synthesizer_Kospeech:
     ###################################################################
 
     def sinfer(self):
-        #경로 수정
-        os.system('C:/Users/User/inference_/Final_project/ffmpeg/bin/ffmpeg -i "C:/Users/User/inference_/Final_project/SpeechRecognition/Record_sample/temp.webm" -vn -acodec copy "C:/Users/User/inference_/Final_project/SpeechRecognition/Record_sample/file.opus" -y')
-        os.system('C:/Users/User/inference_/Final_project/ffmpeg/bin/ffmpeg -i "C:/Users/User/inference_/Final_project/SpeechRecognition/Record_sample/file.opus" "C:/Users/User/inference_/Final_project/SpeechRecognition/Record_sample/file.wav" -y')
-
         self.sampling(self.opt.audio_path, 16000)
         feature = self.parse_audio(self.opt.audio_path, del_silence=True)
         input_length = torch.LongTensor([len(feature)])

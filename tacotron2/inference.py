@@ -5,13 +5,10 @@ import os
 import argparse
 
 ## WaveGlow 프로젝트 위치 설정
-#sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__)))+"\tacotron2\waveglow")
-#sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__)))+"\tacotron2")
-#sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
-sys.path.append("D:/Final_project")
-sys.path.append("D:/Final_project/tacotron2")
-sys.path.append("D:/Final_project/tacotron2/waveglow")
-
+sys.path.append("C:/Users/User/Final")
+sys.path.append("C:/Users/User/Final/Final_project/tacotron2")
+sys.path.append("C:/Users/User/Final/Final_project/tacotron2/waveglow")
+                 
 ## 프로젝트 라이브러리 Import
 from hparams import defaults
 from model import Tacotron2
@@ -69,7 +66,7 @@ class Synthesizer_Tacotron:
         model.load_state_dict(model_for_loading.state_dict())
         return model
 
-    def inference(self, text):
+    def Final(self, text):
         assert type(text)==str, "텍스트 하나만 지원합니다."
         sequence = np.array(text_to_sequence(text, ['korean_cleaners']))[None, :]
         sequence = torch.autograd.Variable(torch.from_numpy(sequence)).cuda().long()
@@ -82,21 +79,21 @@ class Synthesizer_Tacotron:
         audio = audio[0].data.cpu().numpy()
         return audio, self.hparams.sampling_rate
     
-    ## \n으로 구성된 여러개의 문장 inference 하는 코드
-    def inference_phrase(self, phrase, sep_length=4000):
+    ## \n으로 구성된 여러개의 문장 Final 하는 코드
+    def Final_phrase(self, phrase, sep_length=4000):
         texts = phrase.split('\n')
         audios = []
         for text in texts:
             if text == '':
                 audios.append(np.array([0]*sep_length))
                 continue
-            audio, sampling_rate = self.inference(text)
+            audio, sampling_rate = self.Final(text)
             audios.append(audio)
             audios.append(np.array([0]*sep_length))
         return np.hstack(audios[:-1]), sampling_rate
             
     
-    def denoise_inference(self, text, sigma=0.666):
+    def denoise_Final(self, text, sigma=0.666):
         assert type(text)==str, "텍스트 하나만 지원합니다."
         sequence = np.array(text_to_sequence(text, ['korean_cleaners']))[None, :]
         sequence = torch.autograd.Variable(torch.from_numpy(sequence)).cuda().long()
