@@ -138,11 +138,15 @@ $(function(){
             </tr>
             <tr>
                <td>최고가</td>
-              <td>{{ openprice }}</td>
+              <td>{{ highprice }}</td>
             </tr>
             <tr>
                 <td>최소가</td>
-                <td>{{ openprice }}</td>
+                <td>{{ lowprice }}</td>
+            </tr>
+           <tr>
+                <td>거래값</td>
+                <td>{{ tradeprice }}</td>
             </tr>
           </tbody>
         </table>
@@ -164,13 +168,13 @@ $(function(){
             </tr>
             <tr>
                 <td>o</td>
-              <td>코인 개시 가격</td>
-              <td>{{ openprice }}</td>
+               <td>최고가</td>
+              <td>{{ highprice }}</td>
             </tr>
             <tr>
                 <td>o</td>
-              <td>코인 개시 가격</td>
-              <td>{{ openprice }}</td>
+              <td>거래값</td>
+                <td>{{ tradeprice }}</td>
             </tr>
           </tbody>
         </table>
