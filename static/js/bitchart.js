@@ -47,3 +47,19 @@
     $(function() {
       setUpbitData();
     });
+
+   $(function(){
+    $(document).on('click','tr', function(){
+       //alert($(this).attr("class"))
+      var coinid = $(this).attr("class");
+      //location.href="/bitdetail?market=" +coinid;
+        $.ajax({
+        url: "https://api.upbit.com/v1/candles/days?market="+coinid,
+        dataType: "json"
+      }).done(function(markets){
+        //alert(markets[0].market);
+        console.log(markets);
+        location.href="/bitdetail?market=" +markets[0].market+"&openprice="+markets[0].opening_price+"&highprice="+markets[0].high_price+"&lowprice="+markets[0].low_price+"&tradeprice="+markets[0].trade_price;
+        });
+    });
+});
