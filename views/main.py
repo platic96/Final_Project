@@ -18,7 +18,7 @@ def get_candle():
 
     params = request.get_json()
 
-    if params['market'] == '' :
+    if params['market'] == '':
         market = 'KRW-BTC'
     else :
         market = params['market']
@@ -29,6 +29,7 @@ def get_candle():
     response = requests.request("GET", url, headers=headers, params=querystring)
 
     return response.text
+
 
 
 # --------------------------------- [edit] ---------------------------------- #
@@ -119,8 +120,18 @@ def get_candle():
 #     wav_file.write(decode_string)
 
 #     return render_template('question/test.html')
-    
+@bp.route('/bitdetail', methods=['GET'])
+def bitdetail():
+    coinname= request.args.get("market")
+    openprice = request.args.get("openprice")
+    print(coinname+","+openprice)
+
+    return render_template("bitdetail.html")
+
 @bp.route('/')
 def index():
+
     return render_template("index.html")
+
+
 # --------------------------------------------------------------------------- #

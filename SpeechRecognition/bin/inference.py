@@ -15,8 +15,8 @@
 import argparse
 import sys
 #경로 수정
-sys.path.append('C:/Users/User/Final/Final_project/SpeechRecognition')
-sys.path.append('C:/Users/User/Final/Final_project/SpeechRecognition/wavelet_denoiser/src')
+sys.path.append('C:/Users/samsung/PycharmProjects/Final_project3/SpeechRecognition')
+sys.path.append('C:/Users/samsung/PycharmProjects/Final_project3/SpeechRecognition/wavelet_denoiser/src')
 import torch
 import torch.nn as nn
 import numpy as np

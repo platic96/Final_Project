@@ -26,11 +26,11 @@
           //alert($("#table_ticker > tbody > tr").length);
           $("#table_ticker").fadeOut("slow");
           for(let i = 0;i < tickers.length;i++){
-            let rowHtml = "<tr><td>"+arr_korean_name[i].replace("코인","").replace("토큰","")+"</td>";
+            let rowHtml = "<tr class="+tickers[i].market+"><td>"+arr_korean_name[i].replace("코인","").replace("토큰","")+"</td>";
             rowHtml += "<td>" + arr_korean_name[i] +"</td>"
             rowHtml += "<td>" + comma(tickers[i].trade_price)+"</td>"
             rowHtml += "<td>" + comma((tickers[i].signed_change_rate*100).toFixed(2))+" %"+"</td>"
-            rowHtml += "<td>" + comma((     tickers[i].acc_trade_price_24h>1000000 ? ( tickers[i].acc_trade_price_24h / 1000000 ) : tickers[i].acc_trade_price_24h ).toFixed(0)) + (tickers[i].acc_trade_price_24h>1000000 ? "백만" : "") + "</td>"
+            rowHtml += "<td>" + comma((tickers[i].acc_trade_price_24h>1000000 ? ( tickers[i].acc_trade_price_24h / 1000000 ) : tickers[i].acc_trade_price_24h ).toFixed(0)) + (tickers[i].acc_trade_price_24h>1000000 ? "백만" : "") + "</td>"
             rowHtml += "</tr>";
             $("#table_ticker > tbody:last").append(rowHtml);
             //markets[i].korean_name
@@ -47,3 +47,19 @@
     $(function() {
       setUpbitData();
     });
+
+   $(function(){
+    $(document).on('click','tr', function(){
+       //alert($(this).attr("class"))
+      var coinid = $(this).attr("class");
+      //location.href="/bitdetail?market=" +coinid;
+        $.ajax({
+        url: "https://api.upbit.com/v1/candles/days?market="+coinid,
+        dataType: "json"
+      }).done(function(markets){
+        //alert(markets[0].market);
+        console.log(markets);
+        location.href="/bitdetail?market=" +markets[0].market+"&openprice="+markets[0].opening_price+"&highprice="+markets[0].high_price+"&lowprice="+markets[0].low_price+"&tradeprice="+markets[0].trade_price;
+        });
+    });
+});
