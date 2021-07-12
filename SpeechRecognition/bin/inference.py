@@ -44,7 +44,7 @@ import soundfile as sf
 class Synthesizer_Kospeech:
     def __init__(self):
         parser = argparse.ArgumentParser(description='KoSpeech')
-        parser.add_argument('--model_path', type=str, required=False, default='SpeechRecognition/model.pt')
+        parser.add_argument('--model_path', type=str, required=False, default='/usr/test/Final_project/modellocation/model.pt')
         parser.add_argument('--audio_path', type=str, required=False, default='SpeechRecognition/Record_sample/file.wav')
         parser.add_argument('--device', type=str, required=False, default='cpu')
         self.opt = parser.parse_args()
@@ -80,10 +80,6 @@ class Synthesizer_Kospeech:
     ###################################################################
 
     def sinfer(self):
-        #경로 수정
-        os.system('C:/Users/User/inference_/Final_project/ffmpeg/bin/ffmpeg -i "C:/Users/User/inference_/Final_project/SpeechRecognition/Record_sample/temp.webm" -vn -acodec copy "C:/Users/User/inference_/Final_project/SpeechRecognition/Record_sample/file.opus" -y')
-        os.system('C:/Users/User/inference_/Final_project/ffmpeg/bin/ffmpeg -i "C:/Users/User/inference_/Final_project/SpeechRecognition/Record_sample/file.opus" "C:/Users/User/inference_/Final_project/SpeechRecognition/Record_sample/file.wav" -y')
-
         self.sampling(self.opt.audio_path, 16000)
         feature = self.parse_audio(self.opt.audio_path, del_silence=True)
         input_length = torch.LongTensor([len(feature)])
