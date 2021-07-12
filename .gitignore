@@ -13,6 +13,3 @@ build/
 tests/report/
 *.wav
 *.pt
-SpeechRecognition/bin/inference.py
-tacotron2/inference.py
-webm2wav.py
