@@ -95,60 +95,98 @@ $(function(){
 
 <body>
 <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
-		<a class="navbar-brand" style="margin-top: 20px; font-size: 18px;" href="/">Bit to BIT</a>
+        <a class="navbar-brand" style="margin-top: 20px; font-size: 18px;" href="/">Bit to BIT</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
 
 		<div class="collapse navbar-collapse" id="navbarColor03">
 			<ul class="navbar-nav mr-auto">
-				<li class="nav-item">
-					<div class="nav-link" id="loginRecordTag" style="margin-top: 11px; font-size: 13px;">로그인</div>
+				<li class="nav-item active">
+					<a class="nav-link" id="login" onclick="login()">회원가입/로그인 <span class="sr-only">(current)</span></a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link" href="#">문의사항</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" id = "chat-call" href="#">리스트 크게 보기</a>
+					<a class="nav-link" id = "chat-call" href="#">-</a>
 				</li>
 
 			</ul>
 		</div>
 	</nav>
 
+<div style="margin-top:100px;">
+<div id="chart_div" style="float: left; width:45%; height: 100%;"></div>
 
-<div class="toggler">
-	<div id="effect" class="content corner">
-		<div id='tmp' style="color:pink;"></div>
-		<br /><br />
-		<table id="table_ticker" class="table table-hover text-center">
-			<thead>
-				<tr>
-					<td>NO</td>
-					<td>한글명</td>
-					<td>현재가</td>
-					<td>전일대비</td>
-					<td>거래대금</td>
-				</tr>
-			</thead>
-			<tbody>
-			</tbody>
-		</table>
-		<br /><br /><br />
-		<div id='tmp2'></div>
+<div class="details" style="width: 100%; height: 100%;">
+	<div style="border: 1px solid black; float: left; width: 50%; height: 100%;">
+        <script src="{{ url_for('static', filename="js/cybercoin.js") }}" type="text/javascript"></script>
+        <table class="table">
+          <thead>
+            <tr class="table-primary">
+              <th scope="col">종목</th>
+              <th scope="col">수치</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>코인 개시 가격</td>
+              <td>{{ coinData["openprice"] }}</td>
+            </tr>
+            <tr>
+               <td>최고가</td>
+              <td>{{ coinData["highprice"] }}</td>
+            </tr>
+            <tr>
+                <td>최소가</td>
+                <td>{{ coinData["lowprice"] }}</td>
+            </tr>
+           <tr>
+                <td>거래값</td>
+                <td>{{ tradeprice }}</td>
+            </tr>
+          </tbody>
+        </table>
 	</div>
+    <div style="border: 1px solid skyblue; width:50%; height: 100%; float:left; margin-top:10px;">
+      <table class="table">
+          <thead>
+            <tr class="table-info">
+              <th scope="col">코인 소유 여부</th>
+              <th scope="col">종목</th>
+              <th scope="col">수치</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+                <td>o</td>
+             <td>코인 개시 가격</td>
+              <td>{{ coinData["openprice"] }}</td>
+            </tr>
+            <tr>
+                <td>o</td>
+               <td>최고가</td>
+              <td>{{ coinData["highprice"] }}</td>
+            </tr>
+            <tr>
+                <td>o</td>
+              <td>거래값</td>
+                <td>{{ coinData["tradeprice"] }}</td>
+            </tr>
+          </tbody>
+        </table>
+
+    </div>
  </div>
-
-<div id='chart_set'></div>
-
-
+ 
 <br class="clear">
 
 <div class="round hollow text-center" style="position: fixed; bottom: 10px; right:30px;">
 	<button class="btn btn-primary" id="addClass"><i class="fa fa-whatsapp" aria-hidden="true"></i> 챗봇 열기</button>
 </div>
 
-<footer class="container-fluid bg-grey py-5">
+<footer class="container-fluid bg-grey py-5" style="margin-top: 100px;">
 	<div class="container">
 	   <div class="row">
 		 <div class="col-md-6">
@@ -215,20 +253,26 @@ $(function(){
 			<i class="glyphicon glyphicon-remove"></i>
 	</button>
 	<div class="top_menu">
+		<div class="buttons">
+			<div class="btn-group mb-4" role="group" aria-label="Button group example">
+				<button type="button" class="btn btn-primary" id="record">녹음</button>
+				<button type="button" class="btn btn-secondary" id="stop">정지</button>
+			</div>
+		</div>
+		 <button type="button"  class="form-check-input btn btn-info" id="chk-hear-mic" style="display: none">마이크</button>
 		<div class="title">BIT CHAT</div>
 	</div>
 	<ul class="messages" style="background-color: white;"></ul>
 	<div class="bottom_wrapper clearfix">
+
+		<!--녹음버튼 옮기기-->
+
+		<!--녹음버튼 옮기기 끝-->
+
 		<div class="message_input_wrapper">
 			<input class="message_input"
 					onkeyup="return onClickAsEnter(event)"
 					placeholder="내용을 입력하세요."/>
-			<!--녹음버튼 옮기기-->
-			<div class="buttons">
-				<div id="recordTag" class="btn-group mb-4" role="group" aria-label="Button group example"></div>
-			</div>
-			
-			<!--녹음버튼 옮기기 끝-->
 		</div>
 
 		<div class="send_message"
@@ -256,29 +300,18 @@ $(function(){
 </body>
 <script type="text/javascript">
 
-function createSetChartDiv(count) {
-  var chartset = document.getElementById('chart_set');
+function createSingleChartDiv() {
+  var singlechartdiv = document.getElementById('chart_div');
   var chartdiv = document.createElement('div');
-  chartdiv.id = 'chart_div_'+count;
-  chartdiv.style="float:left; height:400px; width:45%";
-  chartset.append(chartdiv)
+  chartdiv.id = 'chart_div_s';
+  singlechartdiv.append(chartdiv);
   return chartdiv;
 }
 
-let chart_div_1 = createSetChartDiv(0);
-getUpbitData('KRW-BTC', 0, chart_div_1);
-var startCandle = setInterval(() => getUpbitData('KRW-BTC', 0, chart_div_1), 3000);
-let chart_div_2 = createSetChartDiv(1);
-getUpbitData('KRW-ETH', 1, chart_div_2);
-var startCandle2 = setInterval(() => getUpbitData('KRW-ETH', 1, chart_div_2), 3000);
-let chart_div_3 = createSetChartDiv(2);
-getUpbitData('KRW-BCH', 2, chart_div_3);
-var startCandle3 = setInterval(() => getUpbitData('KRW-BCH', 2, chart_div_3), 3000);
-
-
-$(function() {
-	record("recordTag", "startTag", "stopTag", "mic")
-})
+let chart_div = createSingleChartDiv();
+var market = '{{ coinData.coinname }}'
+getUpbitData(market, 0, chart_div);
+var startCandle = setInterval(() => getUpbitData(market, 0, chart_div), 3000);
 
 $(function(){
 	$("#addClass").click(function () {
@@ -290,7 +323,8 @@ $(function(){
 		$('#sidebar_secondary').removeClass('popup-box-on');
 		$("#addClass").show();
 	});
-	})
+})
+
 </script>
 
-</html>
+</html> 

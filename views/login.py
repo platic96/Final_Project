@@ -25,7 +25,7 @@ def login() :
     # 음성인식 결과 도출
     #text = stt(path)
     text = stt()
-
+    print(text)
 
     if (text == "허윤석") :
         # 톡봇에 음성인식 결과 전달 (텍스트 전달)
@@ -35,7 +35,6 @@ def login() :
 
     tts(message, session['user'])
     
-
     return jsonify(message['replies'])
 
 

@@ -44,7 +44,7 @@ import soundfile as sf
 class Synthesizer_Kospeech:
     def __init__(self):
         parser = argparse.ArgumentParser(description='KoSpeech')
-        parser.add_argument('--model_path', type=str, required=False, default='SpeechRecognition/model.pt')
+        parser.add_argument('--model_path', type=str, required=False, default='C:/Users/User/inference_/Final_project/SpeechRecognition/model.pt')
         parser.add_argument('--audio_path', type=str, required=False, default='SpeechRecognition/Record_sample/file.wav')
         parser.add_argument('--device', type=str, required=False, default='cpu')
         self.opt = parser.parse_args()
