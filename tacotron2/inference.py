@@ -5,6 +5,7 @@ import os
 import argparse
 
 ## WaveGlow 프로젝트 위치 설정
+
 sys.path.append("/usr/test")
 sys.path.append("/usr/test/Final_project/tacotron2")
 sys.path.append("/usr/test/Final_project/tacotron2/waveglow")
@@ -14,6 +15,7 @@ from hparams import defaults
 from model import Tacotron2
 from layers import TacotronSTFT, STFT
 from audio_processing import griffin_lim
+# from tacotron2.train import load_model
 from tacotron2.train import load_model
 from text import text_to_sequence
 from scipy.io.wavfile import write
