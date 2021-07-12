@@ -13,3 +13,4 @@ build/
 tests/report/
 *.wav
 *.pt
+inference.py
