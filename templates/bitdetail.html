@@ -95,7 +95,7 @@ $(function(){
 
 <body>
 <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
-		<a class="navbar-brand" href="#">Bit to BIT</a>
+        <a class="navbar-brand" style="margin-top: 20px; font-size: 18px;" href="/">Bit to BIT</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
@@ -116,13 +116,11 @@ $(function(){
 		</div>
 	</nav>
 
-<div>
-	<!-- <div id='chart_div' style="height: 400px; min-width: 310px; max-width: 750px;"></div> -->
-	<div id='chart_div' style="height: 400px; width: 100%;"></div>
-</div>
+<div style="margin-top:100px;">
+<div id="chart_div" style="float: left; width:45%; height: 100%;"></div>
 
 <div class="details" style="width: 100%; height: 100%;">
-	<div style="border: 1px solid black; float: left;width: 50%; height: 100%; display: inline-block;">
+	<div style="border: 1px solid black; float: left; width: 50%; height: 100%;">
         <script src="{{ url_for('static', filename="js/cybercoin.js") }}" type="text/javascript"></script>
         <table class="table">
           <thead>
@@ -134,15 +132,15 @@ $(function(){
           <tbody>
             <tr>
               <td>코인 개시 가격</td>
-              <td>{{ openprice }}</td>
+              <td>{{ coinData["openprice"] }}</td>
             </tr>
             <tr>
                <td>최고가</td>
-              <td>{{ highprice }}</td>
+              <td>{{ coinData["highprice"] }}</td>
             </tr>
             <tr>
                 <td>최소가</td>
-                <td>{{ lowprice }}</td>
+                <td>{{ coinData["lowprice"] }}</td>
             </tr>
            <tr>
                 <td>거래값</td>
@@ -151,7 +149,7 @@ $(function(){
           </tbody>
         </table>
 	</div>
-    <div style="border: 1px solid skyblue; width:50%; height: 100%;display: inline-block;">
+    <div style="border: 1px solid skyblue; width:50%; height: 100%; float:left; margin-top:10px;">
       <table class="table">
           <thead>
             <tr class="table-info">
@@ -164,30 +162,31 @@ $(function(){
             <tr>
                 <td>o</td>
              <td>코인 개시 가격</td>
-              <td>{{ openprice }}</td>
+              <td>{{ coinData["openprice"] }}</td>
             </tr>
             <tr>
                 <td>o</td>
                <td>최고가</td>
-              <td>{{ highprice }}</td>
+              <td>{{ coinData["highprice"] }}</td>
             </tr>
             <tr>
                 <td>o</td>
               <td>거래값</td>
-                <td>{{ tradeprice }}</td>
+                <td>{{ coinData["tradeprice"] }}</td>
             </tr>
           </tbody>
         </table>
 
     </div>
  </div>
+ 
 <br class="clear">
 
 <div class="round hollow text-center" style="position: fixed; bottom: 10px; right:30px;">
 	<button class="btn btn-primary" id="addClass"><i class="fa fa-whatsapp" aria-hidden="true"></i> 챗봇 열기</button>
 </div>
 
-<footer class="container-fluid bg-grey py-5">
+<footer class="container-fluid bg-grey py-5" style="margin-top: 100px;">
 	<div class="container">
 	   <div class="row">
 		 <div class="col-md-6">
@@ -300,6 +299,20 @@ $(function(){
 <!-- 챗팅창 끝 -->
 </body>
 <script type="text/javascript">
+
+function createSingleChartDiv() {
+  var singlechartdiv = document.getElementById('chart_div');
+  var chartdiv = document.createElement('div');
+  chartdiv.id = 'chart_div_s';
+  singlechartdiv.append(chartdiv);
+  return chartdiv;
+}
+
+let chart_div = createSingleChartDiv();
+var market = '{{ coinData.coinname }}'
+getUpbitData(market, 0, chart_div);
+var startCandle = setInterval(() => getUpbitData(market, 0, chart_div), 3000);
+
 $(function(){
 	$("#addClass").click(function () {
 		$('#sidebar_secondary').addClass('popup-box-on');
@@ -310,8 +323,8 @@ $(function(){
 		$('#sidebar_secondary').removeClass('popup-box-on');
 		$("#addClass").show();
 	});
-	})
+})
 
 </script>
 
-</html>
+</html> 

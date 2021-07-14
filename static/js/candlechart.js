@@ -1,4 +1,4 @@
-function getUpbitData(market, i) {
+function getUpbitData(market, count, tag) {
     var upbitData;
     $.ajax({
         url:'/candle',
@@ -11,7 +11,6 @@ function getUpbitData(market, i) {
             upbitData = JSON.parse(JSON.stringify(data));
         }
     })
-
     var candleCharData = [];
 
      for(var i=0; i<upbitData.length; i++) {
@@ -36,9 +35,7 @@ function getUpbitData(market, i) {
       }
     };
 
-    var chart = new google.visualization.CandlestickChart(document.getElementById('chart_div'));
+    var chart = new google.visualization.CandlestickChart(tag);
     chart.draw(data, options);
   }
 }
-
-getUpbitData('KRW-BTC', 0)
