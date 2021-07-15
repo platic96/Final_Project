@@ -31,7 +31,6 @@ def login() :
     # 음성인식 결과 도출
     text = stt()
 
-    
     # 톡봇에 음성인식 결과 전달 (텍스트 전달)
     message = TalkBot.talkBot.conversation(text[0])
     session['user'] = message['replies'][0]['message'][-7:]
