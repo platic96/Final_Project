@@ -159,13 +159,12 @@ $(function(){
 
     </div>
  </div>
- 
 <br class="clear">
 
 <div class="round hollow text-center" style="position: fixed; bottom: 10px; right:30px;">
 	<button class="btn btn-primary" id="addClass"><i class="fa fa-whatsapp" aria-hidden="true"></i> 챗봇 열기</button>
 </div>
-
+  
 <footer class="container-fluid bg-grey py-5" style="margin-top: 100px;">
 	<div class="container">
 	   <div class="row">
@@ -279,7 +278,6 @@ $(function(){
 <!-- 챗팅창 끝 -->
 </body>
 <script type="text/javascript">
-
 function createSingleChartDiv() {
   var singlechartdiv = document.getElementById('chart_div');
   var chartdiv = document.createElement('div');
@@ -292,7 +290,6 @@ let chart_div = createSingleChartDiv();
 var market = '{{ coinData.coinname }}'
 getUpbitData(market, 0, chart_div);
 var startCandle = setInterval(() => getUpbitData(market, 0, chart_div), 3000);
-
 $(function(){
 	$("#addClass").click(function () {
 		$('#sidebar_secondary').addClass('popup-box-on');
@@ -306,7 +303,6 @@ $(function(){
 
 	$("#navbar").load("/static/html/navbar.html");
 })
-
 </script>
-
 </html> 
+
