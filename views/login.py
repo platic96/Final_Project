@@ -8,8 +8,8 @@ from .webm2wav import webm2wav
 from TalkBot.talkBotObject import TalkBot
 
 # 아이디 매핑 ( Secretkey, AccessKey )
-minjae = {"secretkey":"GW01NgJHYxx8VRRE4oVb5xcpm5rDcENJyEqKHsie", "accesskey":"Kjd7XuRjnwmHHMmaMHDjzNjUTjqwpFjHtw0C8Wjd", "name":"김민재"}
-younsock = {"secretkey":"GW01NgJHYxx8VRRE4oVb5xcpm5rDcENJyEqKHsie", "accesskey":"Kjd7XuRjnwmHHMmaMHDjzNjUTjqwpFjHtw0C8Wjd", "name":"허윤석"}
+minjae = {"ko_name":"김민재","en_name":"minjaeKim"}
+yunsock = {"ko_name":"허윤석","en_name":"yunsockHuh"}
 
 
 bp = Blueprint('login', __name__ , url_prefix='/login')
@@ -37,16 +37,15 @@ def login() :
     message = []
     if (text[0] == "허윤석") :
         # 톡봇에 음성인식 결과 전달 (텍스트 전달)
-        session['user'] = text[0]
-        TalkBot.talkBot.conversation(younsock["accesskey"])
-        message = TalkBot.talkBot.conversation(younsock["secretkey"])
+        session['user'] = yunsock["ko_name"]
+        message = TalkBot.talkBot.conversation(yunsock["ko_name"])
 
     #톡봇 답변 출력 및 음성합성
     outmessage = []
     outpath = []
     for i in range(len(message['replies'])) :
         outmessage.append(message['replies'][i]['message'])
-        outpath.append(tts(message['replies'][i]['message'], session['user']))
+        outpath.append(tts(message['replies'][i]['message'], yunsock["en_name"]))
 
     data = {'message': outmessage,'inputmessage':text,'path': outpath}
     
