@@ -37,17 +37,6 @@ def get_candle():
     response = requests.request("GET", url, headers=headers, params=querystring)
 @bp.route('/bitdetail', methods=['GET'])
 def bitdetail():
-    temp1 = request.args.get("market")
-    temp2 = request.args.get("openprice")
-    temp3 = request.args.get("highprice")
-    temp4 = request.args.get("lowprice")
-    temp5 = request.args.get("tradeprice")
-
-    print("coinname:"+ temp1+" openprice:"+temp2+" highprice:"+temp3+" lowprice:"+temp4+" tradeprice:"+ temp5)
-    return render_template("bitdetail.html", coinname=temp1, openprice=temp2, highprice=temp3, lowprice=temp4, tradeprice=temp5)
-
-@bp.route('/bitdetail', methods=['GET'])
-def bitdetail():
 
 
     coinData = {
