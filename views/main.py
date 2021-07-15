@@ -1,4 +1,6 @@
 import base64
+
+from flask.globals import session
 #import soundfile as sf
 #from tacotron2.inference import Synthesizer_Tacotron
 from TalkBot.Call_talkBot import CTalkBot
@@ -44,6 +46,24 @@ def bitdetail():
     print("coinname:"+ temp1+" openprice:"+temp2+" highprice:"+temp3+" lowprice:"+temp4+" tradeprice:"+ temp5)
     return render_template("bitdetail.html", coinname=temp1, openprice=temp2, highprice=temp3, lowprice=temp4, tradeprice=temp5)
 
+@bp.route('/bitdetail', methods=['GET'])
+def bitdetail():
+
+
+    coinData = {
+        "coinname":request.args.get("market"),
+        "openprice":request.args.get("openprice"),
+        "highprice":request.args.get("highprice"),
+        "lowprice":request.args.get("lowprice"),
+        "tradeprice":request.args.get("tradeprice"),
+        }
+
+    if 'user' in session :
+        userData = []
+
+        return render_template("bitdetail.html", coinData=coinData, userData=userData)
+
+    return render_template("bitdetail.html", coinData=coinData)
 @bp.route('/')
 def index():
 

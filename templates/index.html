@@ -165,35 +165,7 @@ $(function(){
 </script>
 
 <body>
-<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
-		<a class="navbar-brand" href="#">Bit to BIT</a>
-		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
-			<span class="navbar-toggler-icon"></span>
-		</button>
-
-		<div class="collapse navbar-collapse" id="navbarColor03">
-			<ul class="navbar-nav mr-auto">
-				<li class="nav-item active">
-					<a class="nav-link" id="login" onclick="login()">회원가입/로그인 <span class="sr-only">(current)</span></a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="#">문의사항</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" id = "chat-call" href="#">리스트 크게 보기</a>
-				</li>
-
-			</ul>
-		</div>
-	</nav>
-<li>정렬 방식 선택</li> 
-<select id="sort" class="form-control" name="showList" onchange="change()" style="width:5%; height:100%">
-	<option selected>===선택===</option>
-	<option value="ko_name">한글명</option>
-	<option value="now">현재가</option>
-	<option value="yesterday">전일대비</option>
-	<option value="money">거래대금</option>
-</select>
+<div id="navbar"></div>
 <div class="toggler">
 	<div id="effect" class="content corner">
 		<div id='tmp' style="color:pink;"></div>
@@ -215,12 +187,8 @@ $(function(){
 		<div id='tmp2'></div>
 	</div>
  </div>
-<div>
-	<!-- <div id='chart_div' style="height: 400px; min-width: 310px; max-width: 750px;"></div> -->
-	<div id='chart_div' style="height: 400px; width: 45.5%; float: left;"></div>
-</div>
-
-
+  
+<div id='chart_set'></div>
 <br class="clear">
 
 <div class="round hollow text-center" style="position: fixed; bottom: 10px; right:30px;">
@@ -294,26 +262,20 @@ $(function(){
 			<i class="glyphicon glyphicon-remove"></i>
 	</button>
 	<div class="top_menu">
-		<div class="buttons">
-			<div class="btn-group mb-4" role="group" aria-label="Button group example">
-				<button type="button" class="btn btn-primary" id="record">녹음</button>
-				<button type="button" class="btn btn-secondary" id="stop">정지</button>
-			</div>
-		</div>
-		 <button type="button"  class="form-check-input btn btn-info" id="chk-hear-mic" style="display: none">마이크</button>
 		<div class="title">BIT CHAT</div>
 	</div>
 	<ul class="messages" style="background-color: white;"></ul>
 	<div class="bottom_wrapper clearfix">
-
-		<!--녹음버튼 옮기기-->
-			
-		<!--녹음버튼 옮기기 끝-->
-		
 		<div class="message_input_wrapper">
 			<input class="message_input"
 					onkeyup="return onClickAsEnter(event)"
 					placeholder="내용을 입력하세요."/>
+			<!--녹음버튼 옮기기-->
+			<div class="buttons">
+				<div id="recordTag" class="btn-group mb-4" role="group" aria-label="Button group example"></div>
+			</div>
+			
+			<!--녹음버튼 옮기기 끝-->
 		</div>
 
 		<div class="send_message"
@@ -340,6 +302,31 @@ $(function(){
 <!-- 챗팅창 끝 -->
 </body>
 <script type="text/javascript">
+
+function createSetChartDiv(count) {
+  var chartset = document.getElementById('chart_set');
+  var chartdiv = document.createElement('div');
+  chartdiv.id = 'chart_div_'+count;
+  chartdiv.style="float:left; height:400px; width:45%";
+  chartset.append(chartdiv)
+  return chartdiv;
+}
+
+let chart_div_1 = createSetChartDiv(0);
+getUpbitData('KRW-BTC', 0, chart_div_1);
+var startCandle = setInterval(() => getUpbitData('KRW-BTC', 0, chart_div_1), 3000);
+let chart_div_2 = createSetChartDiv(1);
+getUpbitData('KRW-ETH', 1, chart_div_2);
+var startCandle2 = setInterval(() => getUpbitData('KRW-ETH', 1, chart_div_2), 3000);
+let chart_div_3 = createSetChartDiv(2);
+getUpbitData('KRW-BCH', 2, chart_div_3);
+var startCandle3 = setInterval(() => getUpbitData('KRW-BCH', 2, chart_div_3), 3000);
+
+
+$(function() {
+	record("recordTag", "startTag", "stopTag", "mic")
+})
+
 $(function(){
 	$("#addClass").click(function () {
 		$('#sidebar_secondary').addClass('popup-box-on');
@@ -350,7 +337,9 @@ $(function(){
 		$('#sidebar_secondary').removeClass('popup-box-on');
 		$("#addClass").show();
 	});
-	})
+
+	$("#navbar").load("/static/html/navbar.html");
+})
 
 </script>
 

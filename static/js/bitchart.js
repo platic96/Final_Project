@@ -1,4 +1,3 @@
-
 function change(){
   setUpbitData()
 }
@@ -87,7 +86,7 @@ function setUpbitData() {
       //alert($("#table_ticker > tbody > tr").length);
       $("#table_ticker").fadeOut("slow");
       for (let i = 0; i < tickers.length; i++) {
-        let rowHtml = "<tr class=" + tickers[i].market + "><td>" + tickers[i].ko_name+"</td>";
+        let rowHtml = "<tr onClick =\"location.href='/bitdetail?market="+tickers[i].market+"&openprice="+tickers[i].opening_price+"&highprice="+tickers[i].high_price+"&lowprice="+tickers[i].low_price+"&tradeprice="+tickers[i].trade_price+"'\"><td>" 
         rowHtml += "<td>" + tickers[i].ko_name+"</td>"
         rowHtml += "<td>" + comma(tickers[i].trade_price) + "</td>"
         rowHtml += "<td>" + comma((tickers[i].signed_change_rate * 100).toFixed(2)) + " %" + "</td>"
@@ -107,22 +106,4 @@ function setUpbitData() {
 }
 $(function () {
   setUpbitData();
-});
-
-$(function () {
-  $(document).on('click', 'tr', function () {
-    //alert($(this).attr("class"))
-    var coinid = $(this).attr("class");
-    //location.href="/bitdetail?market=" +coinid;
-    $.ajax({
-      url: "https://api.upbit.com/v1/candles/days?market=" + coinid,
-      dataType: "json"
-    }).done(function (markets) {
-      //alert(markets[0].market);
-      console.log(markets);
-      location.href = "/bitdetail?market=" + markets[0].market + "&openprice=" + markets[0].opening_price + "&highprice=" + markets[0].high_price + "&lowprice=" + markets[0].low_price + "&tradeprice=" + markets[0].trade_price;
-    
-    });
-  });
-
 });

@@ -165,7 +165,6 @@ function Message(arg) {
             $message.addClass(_this.message_side).find('.text').html(_this.text);
             $message[0].id = "mwav" + count++
             $('.messages').append($message);
-            console.log('아하',_this.wavPath)
             if (_this.wavPath != undefined) {
                 // wav파일 추가
                 const mwav = document.getElementById('mwav'+ (count-1))
