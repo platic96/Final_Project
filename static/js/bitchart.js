@@ -31,8 +31,8 @@ function setUpbitData() {
       $("#table_ticker > tbody > tr").remove();
       //alert($("#table_ticker > tbody > tr").length);
       $("#table_ticker").fadeOut("slow");
-      tickers.sort((a, b) => {
-      })
+      
+      
       for (let i = 0; i < tickers.length; i++) {
         let rowHtml = "<tr onClick =\"location.href='/bitdetail?market="+tickers[i].market+"&openprice="+tickers[i].opening_price+"&highprice="+tickers[i].high_price+"&lowprice="+tickers[i].low_price+"&tradeprice="+tickers[i].trade_price+"'\"><td>" 
         rowHtml += arr_korean_name[i].replace("코인", "").replace("토큰", "") + "</td>";

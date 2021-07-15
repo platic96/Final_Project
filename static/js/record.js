@@ -64,8 +64,11 @@ function record(divId, recordId, stopId, micId, login) {
 				record.onclick = () => {
 					mediaRecorder.start()
 					console.log(mediaRecorder.state)
-					console.log("recorder started")
-					console.log("start클릭됨")
+					if(login) {
+						setTimeout(() => {
+							mediaRecorder.stop()
+						}, 5000);
+					}
 					record.style.background = "red"
 					record.style.color = "black"
 					
@@ -74,8 +77,6 @@ function record(divId, recordId, stopId, micId, login) {
 				stop.onclick = () => {
 					mediaRecorder.stop()
 					console.log(mediaRecorder.state)
-					console.log("recorder stopped")
-					console.log("stop클릭됨")
 					record.style.background = ""
 					record.style.color = ""
 				}
@@ -115,10 +116,10 @@ function record(divId, recordId, stopId, micId, login) {
 										return sendMessage(['다시 입력해주세요.'], 'left');
 									}, 1000);
 								} else {
-									// setTimeout(() => {
-									// 	sendMessage(data.inputmessage, 'right')
-									// 	return sendMessage(data.message, 'left', data.path);
-									// }, 2000)
+									setTimeout(() => {
+										sendMessage(data.inputmessage, 'right')
+										return sendMessage(data.message, 'left', data.path);
+									}, 2000)
 								}
 							},
 							error: function (request, status, error) {

@@ -4,6 +4,8 @@ from views import main, login, talkBot
 
 app = Flask(__name__)
 
+app.secret_key = 'Kjd7XuRjnwmHHMmaMHDjzNjUTjqwpFjHtw0C8Wjd'
+
 # --------------------------------- [edit] ---------------------------------- #    
 app.register_blueprint(main.bp)
 app.register_blueprint(login.bp)
