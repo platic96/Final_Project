@@ -5,15 +5,17 @@ import os
 import argparse
 
 ## WaveGlow 프로젝트 위치 설정
-sys.path.append("C:/Users/User/Final")
-sys.path.append("C:/Users/User/Final/Final_project/tacotron2")
-sys.path.append("C:/Users/User/Final/Final_project/tacotron2/waveglow")
+
+sys.path.append("/usr/test")
+sys.path.append("/usr/test/Final_project/tacotron2")
+sys.path.append("/usr/test/Final_project/tacotron2/waveglow")
                  
 ## 프로젝트 라이브러리 Import
 from hparams import defaults
 from model import Tacotron2
 from layers import TacotronSTFT, STFT
 from audio_processing import griffin_lim
+# from tacotron2.train import load_model
 from tacotron2.train import load_model
 from text import text_to_sequence
 from scipy.io.wavfile import write
@@ -32,8 +34,8 @@ class Struct:
 class Synthesizer_Tacotron:
     def __init__(self):
         #tacotron2, waveglow 경로 설정.
-        tacotron2_checkpoint = 'C:/Users/User/Inference/tacotron2/checkpoint.pt'
-        waveglow_checkpoint = 'C:/Users/User/Inference/tacotron2/waveglow/checkpoints/waveglow.pt'
+        tacotron2_checkpoint = '/usr/test/Final_project/modellocation/checkpoint_354000_mhp'
+        waveglow_checkpoint = '/usr/test/Final_project/modellocation/waveglow'
         hparams = Struct(**defaults)
         hparams.n_mel_channels=80
         hparams.sampling_rate = 22050
@@ -47,7 +49,7 @@ class Synthesizer_Tacotron:
         self.tacotron = model
         
         # waveglow config파일 경로 설정
-        with open('C:/Users/User/Inference/tacotron2/waveglow/config.json') as f:
+        with open('/usr/test/Final_project/tacotron2/waveglow/config.json') as f:
             data = f.read()
         config = json.loads(data)
         waveglow_config = config["waveglow_config"]

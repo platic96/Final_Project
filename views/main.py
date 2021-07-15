@@ -20,7 +20,7 @@ def get_candle():
 
     params = request.get_json()
 
-    if params['market'] == '' :
+    if params['market'] == '':
         market = 'KRW-BTC'
     else :
         market = params['market']
@@ -31,7 +31,20 @@ def get_candle():
     response = requests.request("GET", url, headers=headers, params=querystring)
 
     return response.text
+    url = "https://api.upbit.com/v1/candles/minutes/1"
+    querystring = {"market": market, "count": "50"}
+    headers = {"Accept": "application/json"}
+    response = requests.request("GET", url, headers=headers, params=querystring)
+@bp.route('/bitdetail', methods=['GET'])
+def bitdetail():
+    temp1 = request.args.get("market")
+    temp2 = request.args.get("openprice")
+    temp3 = request.args.get("highprice")
+    temp4 = request.args.get("lowprice")
+    temp5 = request.args.get("tradeprice")
 
+    print("coinname:"+ temp1+" openprice:"+temp2+" highprice:"+temp3+" lowprice:"+temp4+" tradeprice:"+ temp5)
+    return render_template("bitdetail.html", coinname=temp1, openprice=temp2, highprice=temp3, lowprice=temp4, tradeprice=temp5)
 
 @bp.route('/bitdetail', methods=['GET'])
 def bitdetail():
@@ -51,8 +64,8 @@ def bitdetail():
         return render_template("bitdetail.html", coinData=coinData, userData=userData)
 
     return render_template("bitdetail.html", coinData=coinData)
-
 @bp.route('/')
 def index():
+
     return render_template("index.html")
 # --------------------------------------------------------------------------- #
