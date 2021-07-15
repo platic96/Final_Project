@@ -9,13 +9,21 @@ function login() {
     login.appendChild(audio);
 }
 
+function stopClick() {
+    
+}
+
 window.addEventListener('load',function() {
     record("loginRecordTag", "startTagl", "stopTagl", "mic1", "login");
     login();
-    document.getElementById('startTagl').click();
     var loginbtn = document.getElementById('loginRecordTag');
-    loginbtn.addEventListener('click', () => {
-        document.getElementById('startTagl').click();
-        setTimeout(() => document.getElementById('stopTagl').click(),5000);
+    var loginStartBtn = this.document.getElementById('startTagl')
+    var loginStopBtn = this.document.getElementById('stopTagl');
+    
+    loginbtn.addEventListener('click', (e) => {
+        loginStartBtn.click();
+        e.stopPropagation()
+        // setTimeout(() => loginStopBtn.click() ,5000);
+        // e.stopPropagation();
     }, false);
 });

@@ -1,4 +1,6 @@
 import base64
+
+from flask.globals import session
 #import soundfile as sf
 #from tacotron2.inference import Synthesizer_Tacotron
 from TalkBot.Call_talkBot import CTalkBot
@@ -18,7 +20,7 @@ def get_candle():
 
     params = request.get_json()
 
-    if params['market'] == '' :
+    if params['market'] == '':
         market = 'KRW-BTC'
     else :
         market = params['market']
@@ -29,10 +31,13 @@ def get_candle():
     response = requests.request("GET", url, headers=headers, params=querystring)
 
     return response.text
-
-
+    url = "https://api.upbit.com/v1/candles/minutes/1"
+    querystring = {"market": market, "count": "50"}
+    headers = {"Accept": "application/json"}
+    response = requests.request("GET", url, headers=headers, params=querystring)
 @bp.route('/bitdetail', methods=['GET'])
 def bitdetail():
+
 
     coinData = {
         "coinname":request.args.get("market"),
@@ -41,10 +46,15 @@ def bitdetail():
         "lowprice":request.args.get("lowprice"),
         "tradeprice":request.args.get("tradeprice"),
         }
-        
-    return render_template("bitdetail.html", coinData=coinData)
 
+    if 'user' in session :
+        userData = []
+
+        return render_template("bitdetail.html", coinData=coinData, userData=userData)
+
+    return render_template("bitdetail.html", coinData=coinData)
 @bp.route('/')
 def index():
+
     return render_template("index.html")
 # --------------------------------------------------------------------------- #

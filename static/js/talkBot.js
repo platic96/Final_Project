@@ -303,8 +303,10 @@ function sendMessage(messageArr, message_side, wavPath) {
             });
         }
         
-        message.draw();
-        $messages.animate({scrollTop: $messages.prop('scrollHeight')}, 300);
+        setTimeout(() => function() {
+            message.draw();
+            $messages.animate({scrollTop: $messages.prop('scrollHeight')}, 300);
+        }, i * 5000)
     }
 }
 
