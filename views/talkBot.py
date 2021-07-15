@@ -41,6 +41,9 @@ def conversationTalkBot() :
 
     # ajax 데이터(입력메세지) 가져오기
     params = request.get_json()
+
+    
+
     # 톡봇에 입력메시지 전달
     message = TalkBot.talkBot.conversation(params['message'])
 
