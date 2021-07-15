@@ -42,8 +42,6 @@ def conversationTalkBot() :
     # ajax 데이터(입력메세지) 가져오기
     params = request.get_json()
 
-    
-
     # 톡봇에 입력메시지 전달
     message = TalkBot.talkBot.conversation(params['message'])
 
@@ -52,7 +50,7 @@ def conversationTalkBot() :
     outmessage = []
     for i in range(len(message['replies'])) :
         outmessage.append(message['replies'][i]['message'])
-        outpath.append(tts(message['replies'][i]['message'], '김민재'))
+        outpath.append(tts(message['replies'][i]['message'], session['en_name'], i))
         #세션 추가필요
         #outpath.append(tts(message['replies'][i]['message'], session['user']))
     
@@ -82,7 +80,7 @@ def conversationTalkBot2Wav() :
     outpath = []
     for i in range(len(message['replies'])) :
         outmessage.append(message['replies'][i]['message'])
-        outpath.append(tts(message['replies'][i]['message'], '김민재'))
+        outpath.append(tts(message['replies'][i]['message'], session['en_name'], i))
 
     data = {'message': outmessage,'inputmessage':text,'path': outpath}
 

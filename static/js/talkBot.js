@@ -296,11 +296,13 @@ function sendMessage(messageArr, message_side, wavPath) {
                 message_side: message_side,
             });
         } else {    // wavPath가 존재하면
-            message = new Message({
-                text: messageArr[i],
-                message_side: message_side,
-                wavPath: wavPath[i],
-            });
+            setTimeout(() => function() {
+                message = new Message({
+                    text: messageArr[i],
+                    message_side: message_side,
+                    wavPath: wavPath[i],
+                });
+            }, i * 5000)
         }
         
         message.draw();
