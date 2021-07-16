@@ -35,9 +35,7 @@
 			}
 		},
 		error: function (request, status, error) {
-			setTimeout(function () {
-				return sendMessage(['죄송합니다. 서버 연결에 실패했습니다.'], 'left');
-			}, 1000);
+			console.log(error)
 		}
 	});
 </script>

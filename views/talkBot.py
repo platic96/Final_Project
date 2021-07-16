@@ -49,9 +49,7 @@ def conversationTalkBot() :
     outmessage = []
     for i in range(len(message['replies'])) :
         outmessage.append(message['replies'][i]['message'])
-        outpath.append(tts(message['replies'][i]['message'], '김민재'))
-        #세션 추가필요
-        #outpath.append(tts(message['replies'][i]['message'], session['user']))
+        outpath.append(tts(message['replies'][i]['message'], session["user_en"], i))
     
     data = {'message': outmessage,'path': outpath}
 
@@ -79,7 +77,7 @@ def conversationTalkBot2Wav() :
     outpath = []
     for i in range(len(message['replies'])) :
         outmessage.append(message['replies'][i]['message'])
-        outpath.append(tts(message['replies'][i]['message'], '김민재'))
+        outpath.append(tts(message['replies'][i]['message'], session["user_en"], i))
 
     data = {'message': outmessage,'inputmessage':text,'path': outpath}
 
