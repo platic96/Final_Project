@@ -60,9 +60,9 @@ def bitdetail():
         print(coinData["coinname"][4:])
         for i in range(len(userData)):
             if userData[i]["currency"] == coinData["coinname"][4:]:
-                break
-
-        return render_template("bitdetail.html", coinData=coinData, userData=userData)
+                percent =round(float(coinData['tradeprice'])/(float(userData[i]['avg_buy_price']))* 100, 2)
+                total_price = round(float(coinData['tradeprice'])*(float(userData[i]["balance"])),2)
+                return render_template("bitdetail.html", coinData=coinData, userData=userData[i],total_price=total_price,percent=percent)
 
     return render_template("bitdetail.html", coinData=coinData)
 
