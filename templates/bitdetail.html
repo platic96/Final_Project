@@ -129,6 +129,7 @@ $(function(){
           </tbody>
         </table>
 	</div>
+	{% if have == true %}
     <div style="border: 1px solid skyblue; width:50%; height: 100%; float:left; margin-top:10px;">
       <table class="table">
           <thead>
@@ -136,14 +137,14 @@ $(function(){
               <th scope="col">구매 평균 가격</th>
               <th scope="col">구매 갯수</th>
               <th scope="col">현재가 대비 %</th>
-			  <th scope="col">전체 가격</th>
+			  <th scope="col">현재 전체 가격</th>
             </tr>
           </thead>
           <tbody>
             <tr>
                 <td>{{ userData["avg_buy_price"] }}</td>
              <td>{{ userData["balance"] }}</td>
-              <td>{{ percent }}</td>
+              <td>- {{ percent }} %</td>
 			  <td>{{ total_price }}</td>
             </tr>
             <!--tr>
@@ -160,6 +161,7 @@ $(function(){
         </table>
 
     </div>
+	{% endif %}
  </div>
 <br class="clear">
 
