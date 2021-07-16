@@ -1,6 +1,6 @@
 import ssl
 from flask import Flask
-from views import main
+from views import main, login, talkBot
 
 app = Flask(__name__)
 
@@ -8,8 +8,8 @@ app.secret_key = 'Kjd7XuRjnwmHHMmaMHDjzNjUTjqwpFjHtw0C8Wjd'
 
 # --------------------------------- [edit] ---------------------------------- #    
 app.register_blueprint(main.bp)
-# app.register_blueprint(login.bp)
-# app.register_blueprint(talkBot.bp)
+app.register_blueprint(login.bp)
+app.register_blueprint(talkBot.bp)
 # --------------------------------------------------------------------------- #    
 
 if __name__ == '__main__':
