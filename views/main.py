@@ -1,4 +1,5 @@
 import base64
+from pprint import pprint
 
 from flask.globals import session
 #import soundfile as sf
@@ -10,6 +11,7 @@ from flask import Blueprint, render_template, request
 import sys, os
 import subprocess
 import requests
+from Upbit_api.upbit import coin
 # sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
 # sys.path.append('C:/Users/User/inference_/Final_project/SpeechRecognition/bin')
 # sys.path.append('C:/Users/User/inference_/Final_project/SpeechRecognition/wavelet_denoiser/src')
@@ -37,8 +39,7 @@ def get_candle():
     response = requests.request("GET", url, headers=headers, params=querystring)
 @bp.route('/bitdetail', methods=['GET'])
 def bitdetail():
-
-
+    print("호출")
     coinData = {
         "coinname":request.args.get("market"),
         "openprice":request.args.get("openprice"),
@@ -46,13 +47,25 @@ def bitdetail():
         "lowprice":request.args.get("lowprice"),
         "tradeprice":request.args.get("tradeprice"),
         }
-
+    
+    # Test_my
+    session['user'] = "허윤석"
+    
+     
     if 'user' in session :
+        coin_ = coin(session['user'])
         userData = []
-
-        return render_template("bitdetail.html", coinData=coinData, userData=userData)
+        userData = coin_.account()
+        
+        print(coinData["coinname"][4:])
+        for i in range(len(userData)):
+            if userData[i]["currency"] == coinData["coinname"][4:]:
+                percent =round(float(coinData['tradeprice'])/(float(userData[i]['avg_buy_price']))* 100, 2)
+                total_price = round(float(coinData['tradeprice'])*(float(userData[i]["balance"])),2)
+                return render_template("bitdetail.html", coinData=coinData, userData=userData[i],total_price=total_price,percent=percent)
 
     return render_template("bitdetail.html", coinData=coinData)
+
 @bp.route('/')
 def index():
 
