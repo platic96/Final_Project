@@ -166,6 +166,15 @@ $(function(){
 
 <body>
 <div id="navbar"></div>
+
+<li>정렬 방식 선택</li> 
+<select id="sort" class="form-control" name="showList" onchange="change()" style="width:5%; height:100%">
+	<option selected>===선택===</option>
+	<option value="ko_name">한글명</option>
+	<option value="now">현재가</option>
+	<option value="yesterday">전일대비</option>
+	<option value="money">거래대금</option>
+</select>
 <div class="toggler">
 	<div id="effect" class="content corner">
 		<div id='tmp' style="color:pink;"></div>
