@@ -15,7 +15,7 @@ function getUpbitData(market, count, tag) {
 
      for(var i=0; i<upbitData.length; i++) {
       let tmp = [upbitData[i].low_price, upbitData[i].opening_price, upbitData[i].trade_price, upbitData[i].high_price]
-      tmp.unshift(upbitData[i].candle_date_time_kst)
+      tmp.unshift(upbitData[i].candle_date_time_kst.split('T')[1])
       candleCharData.push(tmp)
     }
 

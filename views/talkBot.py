@@ -45,14 +45,18 @@ def conversationTalkBot() :
     # 톡봇에 입력메시지 전달
     message = TalkBot.talkBot.conversation(params['message'])
 
+    #로그인을 안했을경우 session 처리
+    if session.get('user_en') is None :
+        wavFileName = 'nologin'
+    else :
+        wavFileName = session.get('user_en') 
+        
     # 메시지 만들어서 출력
     outpath = []
     outmessage = []
     for i in range(len(message['replies'])) :
         outmessage.append(message['replies'][i]['message'])
-        outpath.append(tts(message['replies'][i]['message'], session['en_name'], i))
-        #세션 추가필요
-        #outpath.append(tts(message['replies'][i]['message'], session['user']))
+        outpath.append(tts(message['replies'][i]['message'], wavFileName, i))
     
     data = {'message': outmessage,'path': outpath}
 
@@ -75,12 +79,18 @@ def conversationTalkBot2Wav() :
     #톡봇에 음성인식 결과 전달 (텍스트 전달)
     message = TalkBot.talkBot.conversation(text[0])
 
+    #로그인을 안했을경우 session 처리
+    if session.get('user_en') is None :
+        wavFileName = 'nologin'
+    else :
+        wavFileName = session.get('user_en') 
+
     #톡봇 답변 출력 및 음성합성
     outmessage = []
     outpath = []
     for i in range(len(message['replies'])) :
         outmessage.append(message['replies'][i]['message'])
-        outpath.append(tts(message['replies'][i]['message'], session['en_name'], i))
+        outpath.append(tts(message['replies'][i]['message'], wavFileName, i))
 
     data = {'message': outmessage,'inputmessage':text,'path': outpath}
 

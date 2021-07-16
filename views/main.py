@@ -2,6 +2,7 @@ import base64
 from pprint import pprint
 
 from flask.globals import session
+from flask.scaffold import F
 #import soundfile as sf
 #from tacotron2.inference import Synthesizer_Tacotron
 from TalkBot.Call_talkBot import CTalkBot
@@ -33,13 +34,11 @@ def get_candle():
     response = requests.request("GET", url, headers=headers, params=querystring)
 
     return response.text
-    url = "https://api.upbit.com/v1/candles/minutes/1"
-    querystring = {"market": market, "count": "50"}
-    headers = {"Accept": "application/json"}
-    response = requests.request("GET", url, headers=headers, params=querystring)
+
+
 @bp.route('/bitdetail', methods=['GET'])
 def bitdetail():
-    print("호출")
+    # print("호출")
     coinData = {
         "coinname":request.args.get("market"),
         "openprice":request.args.get("openprice"),
@@ -47,7 +46,7 @@ def bitdetail():
         "lowprice":request.args.get("lowprice"),
         "tradeprice":request.args.get("tradeprice"),
         }
-    
+    have = False
     # Test_my
     session['user'] = "허윤석"
     
@@ -60,11 +59,12 @@ def bitdetail():
         print(coinData["coinname"][4:])
         for i in range(len(userData)):
             if userData[i]["currency"] == coinData["coinname"][4:]:
+                have = True
                 percent =round(float(coinData['tradeprice'])/(float(userData[i]['avg_buy_price']))* 100, 2)
                 total_price = round(float(coinData['tradeprice'])*(float(userData[i]["balance"])),2)
-                return render_template("bitdetail.html", coinData=coinData, userData=userData[i],total_price=total_price,percent=percent)
+                return render_template("bitdetail.html", coinData=coinData, userData=userData[i],total_price=total_price,percent=percent,have=have)
 
-    return render_template("bitdetail.html", coinData=coinData)
+    return render_template("bitdetail.html", coinData=coinData,have=have)
 
 @bp.route('/')
 def index():
