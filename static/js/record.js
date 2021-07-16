@@ -5,18 +5,18 @@ function record(divId, recordId, stopId, micId, login) {
 	record.id = recordId;
 	record.type = 'button';
 	record.innerHTML = "녹음";
-	if(login) {
-		record.style.display = 'none';
-	}
+	// if(login) {
+	// 	record.style.display = 'none';
+	// }
 
 	const stop = document.createElement('button');
 	stop.classList.add('btn', 'btn-secondary');
 	stop.id = stopId;
 	stop.type = 'button';
 	stop.innerHTML = "정지";
-	if(login) {
-		stop.style.display = 'none';
-	}
+	// if(login) {
+	// 	stop.style.display = 'none';
+	// }
 	
 
 	const mic = document.createElement('button');
@@ -64,11 +64,11 @@ function record(divId, recordId, stopId, micId, login) {
 				record.onclick = () => {
 					mediaRecorder.start()
 					console.log(mediaRecorder.state)
-					if(login) {
-						setTimeout(() => {
-							mediaRecorder.stop()
-						}, 5000);
-					}
+					// if(login) {
+					// 	setTimeout(() => {
+					// 		mediaRecorder.stop()
+					// 	}, 5000);
+					// }
 					record.style.background = "red"
 					record.style.color = "black"
 					
@@ -96,7 +96,7 @@ function record(divId, recordId, stopId, micId, login) {
 						form_data.append('base64', base64data)
 
 						if(login) {
-							url = "/login/";
+							url = "/login/loginout";
 						} else {
 							url = "/talkBot/convwav"
 						}
