@@ -33,10 +33,8 @@ def get_candle():
     response = requests.request("GET", url, headers=headers, params=querystring)
 
     return response.text
-    url = "https://api.upbit.com/v1/candles/minutes/1"
-    querystring = {"market": market, "count": "50"}
-    headers = {"Accept": "application/json"}
-    response = requests.request("GET", url, headers=headers, params=querystring)
+
+
 @bp.route('/bitdetail', methods=['GET'])
 def bitdetail():
     print("호출")
