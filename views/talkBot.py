@@ -1,3 +1,4 @@
+from views.login import login, logout
 from flask import Blueprint, render_template, request, jsonify
 from flask.globals import session
 from TalkBot.Call_talkBot import CTalkBot
@@ -42,8 +43,19 @@ def conversationTalkBot() :
     # ajax 데이터(입력메세지) 가져오기
     params = request.get_json()
 
+
+    #로그인일경우
+    if params['message'] == "허윤석" :
+        session['user'] = "허윤석"
+        session['user_en'] = "yunsockHuh"
+
+    #로그아웃 일경우
+    if params['message'] == "로그아웃" :
+        return jsonify(logout())
+    
     # 톡봇에 입력메시지 전달
     message = TalkBot.talkBot.conversation(params['message'])
+
 
     #로그인을 안했을경우 session 처리
     if session.get('user_en') is None :
