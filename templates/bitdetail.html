@@ -133,27 +133,29 @@ $(function(){
       <table class="table">
           <thead>
             <tr class="table-info">
-              <th scope="col">코인 소유 여부</th>
-              <th scope="col">종목</th>
-              <th scope="col">수치</th>
+              <th scope="col">구매 평균 가격</th>
+              <th scope="col">구매 갯수</th>
+              <th scope="col">현재가 대비 %</th>
+			  <th scope="col">전체 가격</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-                <td>o</td>
-             <td>코인 개시 가격</td>
-              <td>{{ coinData["openprice"] }}</td>
+                <td>{{ userData["avg_buy_price"] }}</td>
+             <td>{{ userData["balance"] }}</td>
+              <td>{{ percent }}</td>
+			  <td>{{ total_price }}</td>
             </tr>
-            <tr>
+            <!--tr>
                 <td>o</td>
                <td>최고가</td>
-              <td>{{ coinData["highprice"] }}</td>
+              <td>{{ userData["balance"] }}</td>
             </tr>
             <tr>
                 <td>o</td>
               <td>거래값</td>
-                <td>{{ coinData["tradeprice"] }}</td>
-            </tr>
+                <td>{{ userData["unit_currency"] }}</td>
+            </tr-->
           </tbody>
         </table>
 
@@ -232,20 +234,15 @@ $(function(){
 			<i class="glyphicon glyphicon-remove"></i>
 	</button>
 	<div class="top_menu">
-		<div class="buttons">
-			<div class="btn-group mb-4" role="group" aria-label="Button group example">
-				<button type="button" class="btn btn-primary" id="record">녹음</button>
-				<button type="button" class="btn btn-secondary" id="stop">정지</button>
-			</div>
-		</div>
-		 <button type="button"  class="form-check-input btn btn-info" id="chk-hear-mic" style="display: none">마이크</button>
 		<div class="title">BIT CHAT</div>
 	</div>
 	<ul class="messages" style="background-color: white;"></ul>
 	<div class="bottom_wrapper clearfix">
 
 		<!--녹음버튼 옮기기-->
-
+		<div class="buttons">
+			<div id="recordTag" class="btn-group mb-4" role="group" aria-label="Button group example"></div>
+		</div>
 		<!--녹음버튼 옮기기 끝-->
 
 		<div class="message_input_wrapper">

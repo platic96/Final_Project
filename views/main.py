@@ -7,7 +7,7 @@ from flask.globals import session
 from TalkBot.Call_talkBot import CTalkBot
 #from SpeechRecognition.bin.inference import Synthesizer_Kospeech
 #from denoiser_argument import denoises
-from flask import Blueprint, render_template, request
+from flask import Blueprint, render_template, request, redirect
 import sys, os
 import subprocess
 import requests
@@ -33,10 +33,12 @@ def get_candle():
     response = requests.request("GET", url, headers=headers, params=querystring)
 
     return response.text
-    url = "https://api.upbit.com/v1/candles/minutes/1"
-    querystring = {"market": market, "count": "50"}
-    headers = {"Accept": "application/json"}
-    response = requests.request("GET", url, headers=headers, params=querystring)
+
+@bp.route('/chatroom', methods=['GET'])
+def redirectChatRoom() :
+    return redirect("http://121.140.253.10:5001")
+
+
 @bp.route('/bitdetail', methods=['GET'])
 def bitdetail():
     print("호출")
@@ -60,9 +62,9 @@ def bitdetail():
         print(coinData["coinname"][4:])
         for i in range(len(userData)):
             if userData[i]["currency"] == coinData["coinname"][4:]:
-                break
-
-        return render_template("bitdetail.html", coinData=coinData, userData=userData)
+                percent =round(float(coinData['tradeprice'])/(float(userData[i]['avg_buy_price']))* 100, 2)
+                total_price = round(float(coinData['tradeprice'])*(float(userData[i]["balance"])),2)
+                return render_template("bitdetail.html", coinData=coinData, userData=userData[i],total_price=total_price,percent=percent)
 
     return render_template("bitdetail.html", coinData=coinData)
 
