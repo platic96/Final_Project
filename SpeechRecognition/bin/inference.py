@@ -42,10 +42,10 @@ import soundfile as sf
 
 
 class Synthesizer_Kospeech:
-    def __init__(self):
+    def __init__(self,s):
         parser = argparse.ArgumentParser(description='KoSpeech')
         parser.add_argument('--model_path', type=str, required=False, default='/usr/test/Final_project/modellocation/model.pt')
-        parser.add_argument('--audio_path', type=str, required=False, default='/usr/test/Final_project/SpeechRecognition/Record_sample/file.wav')
+        parser.add_argument('--audio_path', type=str, required=False, default=f'/usr/test/Final_project/SpeechRecognition/Record_sample/{s}.wav')
         parser.add_argument('--device', type=str, required=False, default='cpu')
         self.opt = parser.parse_args()
 
@@ -100,9 +100,3 @@ class Synthesizer_Kospeech:
             y_hats = model.recognize(feature.unsqueeze(0), input_length)
         sentence = vocab.label_to_string(y_hats.cpu().detach().numpy())
         return sentence
-
-
-
-
-
-

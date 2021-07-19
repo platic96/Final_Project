@@ -35,10 +35,10 @@ def login() :
     prebase64 = base64data.getlist('base64')[0]
 
     # webm to wav 변환 및 
-    webm2wav(prebase64)
+    s=webm2wav(prebase64)
 
     # 음성인식 결과 도출
-    text = stt()
+    text = stt(s)
 
     #톡봇에 음성인식 결과 전달 (텍스트 전달)
     message = TalkBot.talkBot.conversation(text[0])

@@ -39,3 +39,27 @@
 		}
 	});
 </script>
+
+<script>
+$(function(){
+
+ var state = true;
+ $("#chat-call").click(function(){
+
+	if(state) {
+	 $("#effect").animate({
+		backgroundColor: "#aa0000",
+		color : "#fff",
+		width: "100%"
+	 }, 1000);
+	}else{
+	 $("#effect").animate({
+		backgroundColor: "white",
+		color: "#000",
+		width: "750px"
+	 }, 1000);
+	}
+	state = !state;
+ });
+});
+</script>

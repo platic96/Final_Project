@@ -87,6 +87,7 @@ function setUpbitData() {
       $("#table_ticker").fadeOut("slow");
       for (let i = 0; i < tickers.length; i++) {
         let rowHtml = "<tr onClick =\"location.href='/bitdetail?market="+tickers[i].market+"&openprice="+tickers[i].opening_price+"&highprice="+tickers[i].high_price+"&lowprice="+tickers[i].low_price+"&tradeprice="+tickers[i].trade_price+"'\"><td>" 
+        rowHtml += (i+1) + "</td>";
         rowHtml += "<td>" + tickers[i].ko_name+"</td>"
         rowHtml += "<td>" + comma(tickers[i].trade_price) + "</td>"
         rowHtml += "<td>" + comma((tickers[i].signed_change_rate * 100).toFixed(2)) + " %" + "</td>"
