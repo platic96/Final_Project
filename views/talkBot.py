@@ -1,3 +1,4 @@
+from views.login import login, logout
 from flask import Blueprint, render_template, request, jsonify
 from flask.globals import session
 from TalkBot.Call_talkBot import CTalkBot

@@ -40,11 +40,11 @@ def login() :
     # 음성인식 결과 도출
     text = stt()
 
+    #톡봇에 음성인식 결과 전달 (텍스트 전달)
     message = TalkBot.talkBot.conversation(text[0])
-    
 
+    print(message)
     session['user'] = message['replies'][0]['message'][:-7]
-    
 
     for i in range(len(IDList)) :
         if IDList[i]['ko_name'] == session['user'] :

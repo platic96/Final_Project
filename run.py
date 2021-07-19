@@ -1,6 +1,10 @@
 import ssl
 from flask import Flask
+<<<<<<< HEAD
 from views import main,login,talkBot
+=======
+from views import main, login, talkBot
+>>>>>>> fe48297063478d88153e75b3baf0ff800e9614f3
 
 app = Flask(__name__)
 

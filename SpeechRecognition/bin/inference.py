@@ -17,7 +17,6 @@ import sys
 #경로 수정
 sys.path.append('/usr/test/Final_project/SpeechRecognition')
 sys.path.append('/usr/test/Final_project/SpeechRecognition/wavelet_denoiser/src')
-
 import torch
 import torch.nn as nn
 import numpy as np

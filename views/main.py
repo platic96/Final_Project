@@ -8,7 +8,7 @@ from flask.scaffold import F
 from TalkBot.Call_talkBot import CTalkBot
 #from SpeechRecognition.bin.inference import Synthesizer_Kospeech
 #from denoiser_argument import denoises
-from flask import Blueprint, render_template, request
+from flask import Blueprint, render_template, request, redirect
 import sys, os
 import subprocess
 import requests
@@ -34,6 +34,10 @@ def get_candle():
     response = requests.request("GET", url, headers=headers, params=querystring)
 
     return response.text
+
+@bp.route('/chatroom', methods=['GET'])
+def redirectChatRoom() :
+    return redirect("http://121.140.253.10:5001")
 
 
 @bp.route('/bitdetail', methods=['GET'])

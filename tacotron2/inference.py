@@ -5,9 +5,10 @@ import os
 import argparse
 
 ## WaveGlow 프로젝트 위치 설정
-sys.path.append('/usr/test/Final_project')
-sys.path.append('/usr/test/Final_project/tacotron2')
-sys.path.append('/usr/test/Final_project/tacotron2/waveglow')
+
+sys.path.append("/usr/test")
+sys.path.append("/usr/test/Final_project/tacotron2")
+sys.path.append("/usr/test/Final_project/tacotron2/waveglow")
                  
 ## 프로젝트 라이브러리 Import
 from hparams import defaults
