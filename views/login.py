@@ -5,9 +5,9 @@ from .tts import tts
 from .webm2wav import webm2wav
 
 from TalkBot.talkBotObject import TalkBot
+from datetime import datetime
 
 # 아이디 매핑 ( Secretkey, AccessKey )
-
 IDList = [
     {"ko_name":"김민재","en_name":"minjaeKim"},
     {"ko_name":"허윤석","en_name":"yunsockHuh"}
@@ -51,11 +51,12 @@ def login() :
             session['user_en'] = IDList[i]['en_name']
             print(session['user_en'])
 
+    s = datetime.now().strftime('%H_%M_%S')
     outmessage = []
     outpath = []
     for i in range(len(message['replies'])) :
         outmessage.append(message['replies'][i]['message'])
-        outpath.append(tts(message['replies'][i]['message'], session["user_en"], i))
+        outpath.append(tts(message['replies'][i]['message'], s, i))
 
 
     #data = {'message': outmessage,'inputmessage':text,'path': outpath}
@@ -78,11 +79,12 @@ def logout() :
     text = '로그아웃'
     message = TalkBot.talkBot.conversation(text)
     
+    s = datetime.now().strftime('%H_%M_%S')
     outmessage = []
     outpath = []
     for i in range(len(message['replies'])) :
         outmessage.append(message['replies'][i]['message'])
-        outpath.append(tts(message['replies'][i]['message'], session["user_en"], i))
+        outpath.append(tts(message['replies'][i]['message'], s, i))
 
     # 세션 초기화
     session.clear()

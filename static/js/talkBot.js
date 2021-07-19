@@ -274,7 +274,6 @@ function greet(talkBotId) {
             }
         });
     }
-    
 };
 
 function getMessageText() {
@@ -286,6 +285,7 @@ function getMessageText() {
 }
 
 function sendMessage(messageArr, message_side, wavPath) {
+    var delWavPath;
     for(var i=0; i<messageArr.length; i++) {
         let $messages, message;
         $('.message_input').val('');
@@ -301,8 +301,25 @@ function sendMessage(messageArr, message_side, wavPath) {
                 message_side: message_side,
                 wavPath: wavPath[i],
             });
+            delWavPath = wavPath[i]
         }
         setTimeout(()=> message.draw(), 5000*i);
+        // setTimeout(()=> {
+        //     $.ajax({
+        //         url: "/deletewav",
+        //         type: 'POST',
+        //         dataType: "json",
+        //         data: JSON.stringify({'wavPath' : delWavPath }),
+        //         contentType: "application/json",
+        //         async: false,
+        //         success: function (data) {
+        //             console.log("Delete Wav")
+        //         },
+        //         error: function (request, status, error) {
+        //             console.log(error)
+        //         }
+        //     });
+        // }, 20000*(i+1));
         $messages.animate({scrollTop: $messages.prop('scrollHeight')}, 300);
     }
 }

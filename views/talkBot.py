@@ -8,6 +8,7 @@ from .stt import stt
 from .webm2wav import webm2wav
 
 from TalkBot.talkBotObject import TalkBot
+from datetime import datetime
 
 bp = Blueprint('talkBot', __name__, url_prefix='/talkBot')
 
@@ -65,9 +66,10 @@ def conversationTalkBot() :
     # 메시지 만들어서 출력
     outpath = []
     outmessage = []
+    s = datetime.now().strftime('%H_%M_%S')
     for i in range(len(message['replies'])) :
         outmessage.append(message['replies'][i]['message'])
-        outpath.append(tts(message['replies'][i]['message'], wavFileName, i))
+        outpath.append(tts(message['replies'][i]['message'], s, i))
     
     data = {'message': outmessage,'path': outpath}
 
@@ -96,12 +98,14 @@ def conversationTalkBot2Wav() :
     else :
         wavFileName = session.get('user_en') 
 
+    s = datetime.now().strftime('%H_%M_%S')
+
     #톡봇 답변 출력 및 음성합성
     outmessage = []
     outpath = []
     for i in range(len(message['replies'])) :
         outmessage.append(message['replies'][i]['message'])
-        outpath.append(tts(message['replies'][i]['message'], wavFileName, i))
+        outpath.append(tts(message['replies'][i]['message'], s, i))
 
     data = {'message': outmessage,'inputmessage':text,'path': outpath}
 
