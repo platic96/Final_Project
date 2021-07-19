@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, request, jsonify
 from flask.globals import session
 from TalkBot.Call_talkBot import CTalkBot
+from views.login import login, logout
 from .tts import tts
 from .stt import stt
 from .webm2wav import webm2wav
@@ -42,15 +43,30 @@ def conversationTalkBot() :
     # ajax 데이터(입력메세지) 가져오기
     params = request.get_json()
 
+    #로그인일경우
+    if params['message'] == "허윤석" :
+        session['user'] = "허윤석"
+        session['user_en'] = "yunsockHuh"
+
+    #로그아웃 일경우
+    if params['message'] == "로그아웃" :
+        return jsonify(logout())
+
     # 톡봇에 입력메시지 전달
     message = TalkBot.talkBot.conversation(params['message'])
 
+    #로그인을 안했을경우 session 처리
+    if session.get('user_en') is None :
+        wavFileName = 'nologin'
+    else :
+        wavFileName = session.get('user_en') 
+        
     # 메시지 만들어서 출력
     outpath = []
     outmessage = []
     for i in range(len(message['replies'])) :
         outmessage.append(message['replies'][i]['message'])
-        outpath.append(tts(message['replies'][i]['message'], session["user_en"], i))
+        outpath.append(tts(message['replies'][i]['message'], wavFileName, i))
     
     data = {'message': outmessage,'path': outpath}
 
@@ -73,12 +89,18 @@ def conversationTalkBot2Wav() :
     #톡봇에 음성인식 결과 전달 (텍스트 전달)
     message = TalkBot.talkBot.conversation(text[0])
 
+    #로그인을 안했을경우 session 처리
+    if session.get('user_en') is None :
+        wavFileName = 'nologin'
+    else :
+        wavFileName = session.get('user_en') 
+
     #톡봇 답변 출력 및 음성합성
     outmessage = []
     outpath = []
     for i in range(len(message['replies'])) :
         outmessage.append(message['replies'][i]['message'])
-        outpath.append(tts(message['replies'][i]['message'], session["user_en"], i))
+        outpath.append(tts(message['replies'][i]['message'], wavFileName, i))
 
     data = {'message': outmessage,'inputmessage':text,'path': outpath}
 
