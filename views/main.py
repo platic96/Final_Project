@@ -51,9 +51,6 @@ def bitdetail():
         "tradeprice":request.args.get("tradeprice"),
         }
     have = False
-    # Test_my
-    session['user'] = "허윤석"
-    
      
     if 'user' in session :
         coin_ = coin(session['user'])
