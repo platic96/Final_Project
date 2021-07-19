@@ -1,6 +1,6 @@
 import os
 import base64
-
+from datetime import datetime
 
 def webm2wav(base64data) :
 
@@ -11,7 +11,7 @@ def webm2wav(base64data) :
     wav_file = open("SpeechRecognition/Record_sample/temp.webm", "wb")
     decode_string = base64.b64decode(prebase64[1])
     wav_file.write(decode_string)
-    
+    s = datetime.now().strftime('%H_%M_%S')
     # webm to wav 변환 
-    os.system('C:/Users/User/inference_/Final_project/ffmpeg/bin/ffmpeg -i "C:/Users/User/Finalr/Final_project/SpeechRecognition/Record_sample/temp.webm" -vn -acodec copy "C:/Users/User/Finalr/Final_project/SpeechRecognition/Record_sample/file.opus" -y')
-    os.system('C:/Users/User/inference_/Final_project/ffmpeg/bin/ffmpeg -i "C:/Users/User/Finalr/Final_project/SpeechRecognition/Record_sample/file.opus" "C:/Users/User/Finalr/Final_project/SpeechRecognition/Record_sample/file.wav" -y')
+    os.system(f'ffmeg -i "/usr/test/Final_project/SpeechRecognition/Record_sample/{s}.webm" -vn -acodec copy "/usr/test/Final_project/SpeechRecognition/Record_sample/{s}.opus" -y')
+    os.system(f'ffmeg -i "/usr/test/Final_project/SpeechRecognition/Record_sample/{s}.opus" "/usr/test/Final_project/SpeechRecognition/Record_sample/{s}.wav" -y')
